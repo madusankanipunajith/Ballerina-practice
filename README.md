@@ -19,3 +19,5 @@ This repo is only used for practicing ballerina
 @type inference in ballerina [https://ballerina.io/learn/by-example/type-inference]
 
 @differnce between map and record (anydata consept removes the hormogeniority of maps ("map<anydata>")) 
+  
+@streams  
