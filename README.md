@@ -20,4 +20,6 @@ This repo is only used for practicing ballerina
 
 @differnce between map and record (anydata consept removes the hormogeniority of maps ("map<anydata>")) 
   
-@streams  
+@streams
+
+@@sttraammpp
