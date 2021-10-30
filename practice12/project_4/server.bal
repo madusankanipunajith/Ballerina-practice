@@ -39,7 +39,14 @@ service class echoServer {
 
             string? id = jr?.id;
 
-            float result = arithmaticEvaluation(jr);
+            float|error? output = arithmaticEvaluation(jr);
+            float|string result = 0.0f;
+
+            if output is float{
+                result = output;
+            }else{
+                result = "invalid method";
+            }
 
             if id !== () {
                 io:println("Id is there : ", result);
@@ -64,7 +71,7 @@ service class echoServer {
 
 }
 
-function arithmaticEvaluation(JsonRecord msg) returns float {
+function arithmaticEvaluation(JsonRecord msg) returns float|error? {
     string method = msg.method;
     int[] numberArray = msg.params;
     
@@ -91,7 +98,7 @@ function arithmaticEvaluation(JsonRecord msg) returns float {
             }
         }
         _ =>{
-            answer = 0.0f;
+            return error("Invalid method...");
         }
     }
 

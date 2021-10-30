@@ -4,7 +4,7 @@ import ballerina/tcp;
 public function main() returns error?{
     io:println("Welcome to the client dashboard...");
 
-    json msg ={"jsonrpc": "2.0", "method": "add", "params": [1,2,4]};
+    json msg ={"jsonrpc": "2.0", "method": "adds", "params": [1,2,4], "id":"1"};
 
     tcp:Client clientSocket = check new("localhost", 8080);
     
