@@ -28,5 +28,5 @@ public function main() returns error? {
     
     io:println(mapResult);
     ()[]mapResult2 = recc.map((val) => io:println(val.name," ", val.age));
-    
+    io:println(mapResult2);
 }
