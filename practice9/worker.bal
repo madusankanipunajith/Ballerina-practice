@@ -1,6 +1,6 @@
 import ballerina/io;
 
-public function main() {
+public function main() returns error?{
     string name = "Madusanka";
     io:println("This is worker DS practice....");
 
@@ -19,4 +19,20 @@ public function main() {
     wait work_3;
 
     io:println("This is the line defined after the VIP workers");
+
+    future<int> ans = demo();
+    int answer = check wait ans;
+    io:println(answer);
+
+    //future<int> ans2 = demo();
+}
+
+
+function demo() returns future<int>{
+    worker A returns int{
+        return 100;
+    }
+
+    return A;
+
 }
