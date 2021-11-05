@@ -6,7 +6,7 @@ public function main() returns error?{
 
     json msg ={"jsonrpc": "2.0", "method": "adds", "params": [1,2,4], "id":"1"};
 
-    tcp:Client clientSocket = check new("localhost", 8080);
+    tcp:Client clientSocket = check new("localhost", 8080); 
     
     // convirted json message into string
     string conMsg = msg.toJsonString();
