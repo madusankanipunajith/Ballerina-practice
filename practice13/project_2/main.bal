@@ -1,7 +1,7 @@
 import ballerina/io;
-
-// Prints `Hello World`.
+import project_2.madusanka;
 
 public function main() {
-    io:println("Hello, World!");
+    string name = madusanka:hello("Madusanka");
+    io:println(name);
 }
