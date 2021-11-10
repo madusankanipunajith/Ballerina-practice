@@ -1,20 +1,41 @@
 import ballerina/io;
 import madusanka.method_handler;
+import madusanka.validator_alpha;
+import madusanka.caller_alpha;
+import madusanka.filter_alpha;
 
-type func function(int c) returns int; 
+type ASP record {
+    int x;
+    int y;
+};
 
-public function main() {
-    
-    io:println(method_handler:getX());
+string str = "{\"jsonrpc\":\"2.0\",\"method\":\"add\",\"params\":{\"x\":89, \"y\":100},\"id\":10}";
 
-    method_handler:method method_1 = new("add", addFunction, 20);
-    io:println(typeof method_1.getFunction());
+public function main() returns error?{
 
-    func z = <func> method_1.getFunction();
-    io:println(z(10));
-    io:println(method_1.getResult());
+    method_handler:method method_1 =  check new("add", addFunction);
+    method_handler:method method_2 =  check new("sub", subFunction);
+
+
+    validator_alpha:JsonRPCTypes?|error response = caller_alpha:caller(str);
+    io:println(response);
 }
 
-public function addFunction(int x) returns int{
-    return x + 10;
+
+
+// user defined functions
+public function addFunction(string msg) returns int|error{
+    
+    anydata x = check filter_alpha:paramFilter(msg);
+    ASP asp = check x.cloneWithType();
+    
+    return asp.x + asp.y;
+}
+
+public function subFunction(string msg) returns int|error{
+
+   anydata x = check filter_alpha:paramFilter(msg);
+   ASP asp = check x.cloneWithType();
+    
+    return asp.x - asp.y;
 }

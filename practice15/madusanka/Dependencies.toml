@@ -12,12 +12,16 @@ name = "madusanka"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "io"},
+	{org = "ballerina", name = "lang.value"},
 	{org = "ballerina", name = "random"},
 	{org = "ballerinai", name = "observe"}
 ]
 modules = [
 	{org = "asus", packageName = "madusanka", moduleName = "madusanka"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.method_handler"}
+	{org = "asus", packageName = "madusanka", moduleName = "madusanka.caller_alpha"},
+	{org = "asus", packageName = "madusanka", moduleName = "madusanka.filter_alpha"},
+	{org = "asus", packageName = "madusanka", moduleName = "madusanka.method_handler"},
+	{org = "asus", packageName = "madusanka", moduleName = "madusanka.validator_alpha"}
 ]
 
 [[package]]
@@ -43,6 +47,9 @@ name = "lang.value"
 version = "0.0.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
+]
+modules = [
+	{org = "ballerina", packageName = "lang.value", moduleName = "lang.value"}
 ]
 
 [[package]]
