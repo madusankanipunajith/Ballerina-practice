@@ -14,7 +14,8 @@ service on new tcp:Listener(8080) {
     remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService | tcp:Error?{
         io:println("client is connect to the server socket with port : ", caller.remotePort);
         
-        return new echoServer();
+        tcp:ConnectionService res = new echoServer();
+        return res;
     }
 }
 
