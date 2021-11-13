@@ -12,7 +12,7 @@ type ASP record {
 
 string str = "{\"jsonrpc\":\"2.0\",\"method\":\"adds\",\"params\":{\"x\":89, \"y\":100},\"id\":10}";
 string str2 = "{\"foo\": \"boo\"}";
-string str3 = "[{\"jsonrpc\":\"2.0\",\"method\":\"add\",\"params\":{\"x\":89, \"y\":100},\"id\":10}, {\"jsonrpc\":\"2.0\",\"method\":\"sub\",\"params\":{\"x\":89, \"y\":100},\"id\":10}]";
+string str3 = "[{\"jsonrpc\":\"2.0\",\"method\":\"add\",\"params\":{\"x\":89, \"y\":100},\"id\":10}, {\"jsonrpc\":\"2.0\",\"method\":\"subs\",\"params\":{\"x\":89, \"y\":100},\"id\":10}]";
 
 public function main() returns error?{
 
