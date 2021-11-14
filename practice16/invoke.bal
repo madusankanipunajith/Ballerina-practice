@@ -26,6 +26,20 @@ public function poll(handle receiver) returns handle = @java:Method {
 } external;
 
 
+public function getMethods() returns handle = @java:Method {
+    'class: "java.lang.Class"
+}external;
+
+
+public class Test {
+    
+    private string name;
+
+    function setNames(string name) {
+        self.name = name;
+    }
+}
+
 
 public function main() returns error?{
     var uid = createRandomUUID();
@@ -42,4 +56,7 @@ public function main() returns error?{
     var nextInLineHandle = poll(arrayDeque);
     io:println(nextInLineHandle);
     io:println(arrayDeque);
+
+
+    
 }
