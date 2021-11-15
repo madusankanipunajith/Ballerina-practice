@@ -21,7 +21,7 @@ public function main() {
     io:println(z);
 }       
 
-class myClass {
+class myClass{
     private int my_age;
     private int friend_age;
 
