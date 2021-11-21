@@ -1,4 +1,4 @@
-import ballerina/io;
+//import ballerina/io;
 import ballerina/lang.value;
 
 type JsonRecord record {|
@@ -47,8 +47,8 @@ public function main() returns error?{
     string str5 = "{\"jsonrpc\": \"2.0\", \"error\": {\"code\": -32601, \"message\": \"Method not found\"}, \"id\":23}";
 
     JsonRPCTypes|error result = messageValidator(str5);
-    io:println(result.ensureType());
-    io:println(typeof result);
+    // io:println(result.ensureType());
+    // io:println(typeof result);
 }
 
 // 0 -> notification

@@ -1,8 +1,8 @@
-import ballerina/io;
 import madusanka.json_input;
 import madusanka.method_handler;
 import madusanka.validator;
 import madusanka.runner;
+import ballerina/io;
 
 // user defined record types
 type Nip record {|
