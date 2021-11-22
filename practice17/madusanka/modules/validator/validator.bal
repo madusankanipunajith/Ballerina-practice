@@ -1,7 +1,7 @@
 //import ballerina/io;
 import ballerina/lang.value;
 
-type JsonRecord record {|
+public type JsonRecord record {|
     int id?;
     string method?;
     string result?;
