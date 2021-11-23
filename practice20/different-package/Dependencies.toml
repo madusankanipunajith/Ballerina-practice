@@ -8,26 +8,38 @@ dependencies-toml-version = "2"
 
 [[package]]
 org = "asus"
-name = "madusanka"
+name = "different_package"
+version = "0.1.0"
+dependencies = [
+	{org = "asus", name = "json_rpc"},
+	{org = "ballerina", name = "io"},
+	{org = "ballerinai", name = "observe"}
+]
+modules = [
+	{org = "asus", packageName = "different_package", moduleName = "different_package"}
+]
+
+[[package]]
+org = "asus"
+name = "json_rpc"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "io"},
 	{org = "ballerina", name = "lang.value"},
 	{org = "ballerina", name = "log"},
-	{org = "ballerina", name = "tcp"},
-	{org = "ballerina", name = "test"},
-	{org = "ballerinai", name = "observe"}
+	{org = "ballerina", name = "tcp"}
 ]
 modules = [
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.caller"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.filter"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.json_input"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.method_handler"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.runner"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.services"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.store"},
-	{org = "asus", packageName = "madusanka", moduleName = "madusanka.validator"}
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.caller"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.client"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.filter"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.method_handler"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.runner"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.server"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.services"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.store"},
+	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.validator"}
 ]
 
 [[package]]
@@ -63,9 +75,6 @@ version = "0.0.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]
-modules = [
-	{org = "ballerina", packageName = "lang.value", moduleName = "lang.value"}
-]
 
 [[package]]
 org = "ballerina"
@@ -76,9 +85,6 @@ dependencies = [
 	{org = "ballerina", name = "jballerina.java"},
 	{org = "ballerina", name = "lang.value"},
 	{org = "ballerina", name = "observe"}
-]
-modules = [
-	{org = "ballerina", packageName = "log", moduleName = "log"}
 ]
 
 [[package]]
@@ -96,21 +102,6 @@ version = "1.0.1"
 dependencies = [
 	{org = "ballerina", name = "crypto"},
 	{org = "ballerina", name = "jballerina.java"}
-]
-modules = [
-	{org = "ballerina", packageName = "tcp", moduleName = "tcp"}
-]
-
-[[package]]
-org = "ballerina"
-name = "test"
-version = "0.0.0"
-scope = "testOnly"
-dependencies = [
-	{org = "ballerina", name = "jballerina.java"}
-]
-modules = [
-	{org = "ballerina", packageName = "test", moduleName = "test"}
 ]
 
 [[package]]
