@@ -37,7 +37,7 @@ public function caller(string message) returns validator:JsonRPCTypes?|error{
                 anydata params = result.params;
                 
                 store:InputFunc param;
-                io:println(typeof params);
+                //io:println(typeof params);
 
                 if( !(params is anydata[]) && !(params is map<anydata>)){
                     
@@ -83,4 +83,5 @@ public function caller(string message) returns validator:JsonRPCTypes?|error{
         }  
 
     }
+    return;
 }

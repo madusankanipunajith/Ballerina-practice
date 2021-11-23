@@ -15,7 +15,7 @@ public function main() returns error?{
     byte[] msgByteArray = conMsg.toBytes(); 
     
    // send byte message to the connected server socket
-   any? s = check clientSocket->writeBytes(msgByteArray);
+   any? _ = check clientSocket->writeBytes(msgByteArray);
 
    io:println("message is sent to the server socket");
 

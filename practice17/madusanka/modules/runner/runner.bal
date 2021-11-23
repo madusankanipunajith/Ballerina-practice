@@ -55,4 +55,5 @@ public function executor(string argument) returns validator:Error|validator:Resp
     }else{
         io:println("Hi");
     }
+    return;
 }

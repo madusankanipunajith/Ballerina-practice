@@ -2,7 +2,7 @@
 org = "asus"
 name = "madusanka"
 version = "0.1.0"
-export= ["madusanka","madusanka.caller", "madusanka.runner", "madusanka.json_input", "madusanka.method_handler"]
+export= ["madusanka.validator","madusanka.caller", "madusanka.runner", "madusanka.json_input", "madusanka.method_handler"]
 distribution = "slbeta3"
 
 [build-options]

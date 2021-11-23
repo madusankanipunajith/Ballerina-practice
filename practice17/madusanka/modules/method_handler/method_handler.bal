@@ -2,7 +2,6 @@ import madusanka.store;
 
 
 
-
 # Description
 #
 # + method - User Define Method Name 
@@ -15,7 +14,7 @@ public function myFunction(string method, function (store:InputFunc) returns any
         store:methodMapper[method] =  x.clone();     
     
     }else{
-         return error("same request method name cannot be applied...");
+        return error("same request method name cannot be applied...");
     }
    
 }

@@ -3,3 +3,9 @@ distribution = "slbeta3"
 
 [build-options]
 observabilityIncluded = true
+
+[[dependency]]
+org= "asus"
+name= "madusanka"
+version= "0.1.0"
+repository="local"
