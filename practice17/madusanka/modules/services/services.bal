@@ -1,11 +1,16 @@
 import ballerina/io;
 import ballerina/log;
 import ballerina/tcp;
+import madusanka.runner;
 
+function (string x) returns any|error func = runner:executor.clone();
 
 # defService is an isolated function which is used for managing concurrency.
 # + return - Return conncetionService instance or an error  
 public isolated  function defService() returns tcp:ConnectionService | tcp:Error{
+    @strand{
+        thread: "any"
+    }
     tcp:ConnectionService csv = new Service();
     return csv;
 }
@@ -16,6 +21,9 @@ service class Service {
     remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns tcp:Error? {
         
         io:println("Echo: ", string:fromBytes(data));
+        string request = checkpanic string:fromBytes(data);
+        io:println(func(request));
+        //io:println(runner:executor(request));
         return caller->writeBytes(data);
     }
 
@@ -27,3 +35,4 @@ service class Service {
         io:println("Client left");
     }
 }
+

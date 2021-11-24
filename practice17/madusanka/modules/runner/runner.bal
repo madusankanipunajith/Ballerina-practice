@@ -4,9 +4,10 @@ import madusanka.caller;
 import ballerina/io;
 
 public type BatchResponse validator:JsonRPCTypes[];
-BatchResponse batch_res_array = [];
+
 
 public function executor(string argument) returns validator:Error|validator:Response|BatchResponse|error?{
+    BatchResponse batch_res_array = [];    
     
     any|error z = trap value:fromJsonString(argument);
     io:println(typeof z);
@@ -55,5 +56,6 @@ public function executor(string argument) returns validator:Error|validator:Resp
     }else{
         io:println("Hi");
     }
+    
     return;
 }

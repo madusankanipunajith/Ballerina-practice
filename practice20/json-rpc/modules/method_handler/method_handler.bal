@@ -10,7 +10,7 @@ public store:methMapper methMap = new();
 # + x - User Define Function
 # + return - Return Value Is error otherwise nothing is retured  
 public function addFunction(string method, function (store:InputFunc) returns any|error x) returns error?{
-
+    
     check methMap.addMethod(method, x);
    
 }

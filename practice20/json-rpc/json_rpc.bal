@@ -17,6 +17,7 @@ string str3 = "[{\"jsonrpc\":\"2.0\",\"method\":\"add\",\"params\":{\"x\":89, \"
 string str4 = "{\"jsonrpc\":\"2.0\",\"method\":\"mult\",\"params\":[10,20,30],\"id\":10}";
 string str5 = "{\"jsonrpc\":\"2.0\",\"method\":\"mult\",\"params\":550,\"id\":10}";
 public function main() {
+
     io:println("hello");
     server:serverFunction("add", addFunction);
     server:serverFunction("sub", subFunction);
