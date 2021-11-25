@@ -12,7 +12,7 @@ service on new tcp:Listener(8080) {
 }
 
 service class echoService {
-    
+    *tcp:ConnectionService;
     remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns tcp:Error?{
         
         string|error stringJsonMsg = string:fromBytes(data);

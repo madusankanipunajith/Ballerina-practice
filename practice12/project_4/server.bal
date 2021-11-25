@@ -11,16 +11,17 @@ type JsonRecord record {
 
 service on new tcp:Listener(8080) {
     
-    remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService | tcp:Error?{
-        io:println("client is connect to the server socket with port : ", caller.remotePort);
-        
-        tcp:ConnectionService res = new echoServer();
-        return res;
+     remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService {
+
+        io:println("Client connected to echo server: ", caller.remotePort);
+        return new echoServer();       
     }
 }
 
 
 service class echoServer {
+    *tcp:ConnectionService;
+    
     remote function onBytes(tcp:Caller caller , readonly & byte[] data) returns tcp:Error?{
         
         string|error stringJsonMsg = string:fromBytes(data);
