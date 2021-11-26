@@ -1,9 +1,14 @@
 import json_rpc.validator;
-import json_rpc.store;
 import ballerina/io;
 import ballerina/lang.value;
 
-public function caller(string message, map<function (store:InputFunc func) returns any|error> methMapper) returns validator:JsonRPCTypes?|error{
+public type InputFunc record {|
+    
+    anydata...;
+
+|};
+
+public isolated function caller(string message, map<isolated function (InputFunc func) returns any|error> methMapper) returns validator:JsonRPCTypes?|error{
     
     validator:JsonRPCTypes|error result = trap validator:messageValidator(message);
 
@@ -33,12 +38,10 @@ public function caller(string message, map<function (store:InputFunc func) retur
             
             }else{
 
-                //function (store:InputFunc) returns any|error get = store:methodMapper.get(result.method);
-                //function (store:InputFunc) returns any|error get = method_handler:methMap.getMethod(result.method);
-                function (store:InputFunc) returns any|error get = methMapper.get(result.method);
+                isolated function (InputFunc) returns any|error get = methMapper.get(result.method);
                 anydata params = result.params;
                 
-                store:InputFunc param;
+                InputFunc param;
                 io:println(typeof params);
 
                 if params === () {
@@ -79,14 +82,14 @@ public function caller(string message, map<function (store:InputFunc func) retur
                 any res = check get(param);
                 
 
-                    validator:Response response = {
-                        id: result.id,
-                        result: res,
-                        jsonrpc: "2.0"
-                    };
+                validator:Response response = {
+                    id: result.id,
+                    result: res,
+                    jsonrpc: "2.0"
+                };
 
-                    return response;
-                }
+                return response;
+            }
 
         }
    
