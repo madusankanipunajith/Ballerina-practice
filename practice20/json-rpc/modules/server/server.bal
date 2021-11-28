@@ -44,7 +44,7 @@ public class Server {
 
     public function messageCatcher(string message) returns validator:Error | validator:Response | runner:BatchResponse | error?{
         //return self.serverExecutor(message, self.methodMapper);
-
+        
         return runner:executor(message, self.methodMapper);
 
     }

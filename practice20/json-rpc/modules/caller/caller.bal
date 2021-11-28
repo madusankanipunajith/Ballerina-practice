@@ -3,6 +3,18 @@ import json_rpc.store;
 import ballerina/io;
 import ballerina/lang.value;
 
+
+function parseError() returns validator:Error{
+    
+    validator:Error err ={
+            id: null,
+            err: {"code": "-32700", "message": "Parse error"},
+            jsonrpc: "2.0" 
+    };
+
+    return err;
+}
+
 public function caller(string message, map<function (store:InputFunc func) returns any|error> methMapper) returns validator:JsonRPCTypes?|error{
     
     validator:JsonRPCTypes|error result = trap validator:messageValidator(message);
@@ -33,8 +45,6 @@ public function caller(string message, map<function (store:InputFunc func) retur
             
             }else{
 
-                //function (store:InputFunc) returns any|error get = store:methodMapper.get(result.method);
-                //function (store:InputFunc) returns any|error get = method_handler:methMap.getMethod(result.method);
                 function (store:InputFunc) returns any|error get = methMapper.get(result.method);
                 anydata params = result.params;
                 
