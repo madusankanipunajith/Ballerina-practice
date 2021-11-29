@@ -18,12 +18,12 @@ public function main() {
     io:println(s1.runner(str3));
 }
 
-public function addFunction(server:Input ifs) returns int|error{
+public isolated function addFunction(server:Input ifs) returns int|error{
   Nip nip = check ifs.cloneWithType();
   return nip.x + nip.y;
 }
 
-public function printArray(server:Input fis) {
+public isolated function printArray(server:Input fis) {
   any [] p = <any[]> fis;
   io:println(p[1]);
 }

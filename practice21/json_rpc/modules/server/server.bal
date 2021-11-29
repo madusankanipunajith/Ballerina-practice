@@ -3,8 +3,8 @@ import json_rpc.validator;
 import json_rpc.store;
 import ballerina/lang.value;
 
-type MapFunctionType function (store:Input) returns any|error;
-type BatchResponse validator:JsonRPCTypes?[]; BatchResponse batch_res_array = [];
+type MapFunctionType isolated function (store:Input) returns any|error;
+type BatchResponse validator:JsonRPCTypes?[]; 
 
 # User Input parameters  
 type InputFunc record {|
@@ -15,37 +15,43 @@ type InputFunc record {|
 
 public type Input InputFunc|anydata[];
 
-public class Server {
-    private map<function (store:Input func) returns any|error> methodMapper = {};
+public isolated class Server {
+    private map<isolated function (store:Input func) returns any|error> methodMapper = {};
 
-    private function addFunction(string method, function (store:Input) returns any|error servFunc) returns error?{
+    private isolated function addFunction(string method,isolated function (store:Input) returns any|error servFunc) returns error?{
                   
-            if (self.methodMapper[method] is null) {
+            lock {
                 
-                self.methodMapper[method] =  servFunc.clone();     
+                if (self.methodMapper[method] is null) {
+                
+                    self.methodMapper[method] =  servFunc.clone();     
     
-            }else{
+                }else{
 
-                return error("same request method name cannot be applied...");
+                    return error("same request method name cannot be applied...");
+                }
+
             }
         
     }
 
-    private function methodFilter(string message) returns MapFunctionType?{
+    private isolated function methodFilter(string message) returns MapFunctionType?{
         validator:JsonRPCTypes|error result = trap validator:messageValidator(message);
 
         if result is validator:Request{
             string method = result.method;
 
-            if !(self.methodMapper[method] is null){
-                return self.methodMapper[method];
+            lock {
+                if !(self.methodMapper[method] is null){
+                    return self.methodMapper[method];
+                }
             }
         }
 
         return null; 
     }
 
-    private function executeSingleJson(string message) returns validator:Error|validator:Response?{
+    private isolated function executeSingleJson(string message) returns validator:Error|validator:Response?{
         validator:Request|validator:Error|null output = caller:checker(message);
 
         if output is validator:Request{
@@ -68,7 +74,8 @@ public class Server {
 
     }
 
-    private function executeBatchJson(string message) returns BatchResponse{
+    private isolated function executeBatchJson(string message) returns BatchResponse{
+        BatchResponse batch_res_array = [];
         any z = checkpanic value:fromJsonString(message);
 
         if z is any[]{
@@ -82,7 +89,7 @@ public class Server {
         return []; 
     }
 
-    public  function runner(string message) returns validator:JsonRPCTypes|BatchResponse?{
+    public isolated function runner(string message) returns validator:JsonRPCTypes|BatchResponse?{
         int batchChecker = caller:batchChecker(message);
 
         match batchChecker {
@@ -105,7 +112,7 @@ public class Server {
  
     }
 
-    public function serverFunction(string method, function (store:Input) returns any|error servFunc){
+    public isolated function serverFunction(string method, isolated function (store:Input) returns any|error servFunc){
         
         checkpanic self.addFunction(method,servFunc);
     }
