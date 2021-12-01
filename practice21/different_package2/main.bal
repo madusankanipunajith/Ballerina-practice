@@ -28,4 +28,3 @@ public isolated function printArray(server:Input fis) {
   any [] p = <any[]> fis;
   io:println(p[1]);
 }
-

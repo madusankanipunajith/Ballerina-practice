@@ -1,7 +1,6 @@
 import json_rpc.caller;
 import json_rpc.validator;
 import json_rpc.store;
-import ballerina/lang.value;
 
 type MapFunctionType isolated function (store:Input) returns any|error;
 type BatchResponse validator:JsonRPCTypes?[]; 
@@ -35,8 +34,8 @@ public isolated class Server {
         
     }
 
-    private isolated function methodFilter(string message) returns MapFunctionType?{
-        validator:JsonRPCTypes|error result = trap validator:messageValidator(message);
+    private isolated function methodFilter(json message) returns MapFunctionType?{
+        validator:JsonRPCTypes result = validator:messageValidator(message);
 
         if result is validator:Request{
             string method = result.method;
@@ -51,7 +50,7 @@ public isolated class Server {
         return null; 
     }
 
-    private isolated function executeSingleJson(string message) returns validator:Error|validator:Response?{
+    private isolated function executeSingleJson(json message) returns validator:Error|validator:Response?{
         validator:Request|validator:Error|null output = caller:checker(message);
 
         if output is validator:Request{
@@ -74,42 +73,37 @@ public isolated class Server {
 
     }
 
-    private isolated function executeBatchJson(string message) returns BatchResponse{
+    private isolated function executeBatchJson(json[] message) returns BatchResponse{
         BatchResponse batch_res_array = [];
-        any z = checkpanic value:fromJsonString(message);
 
-        if z is any[]{
-            foreach var item in z {
-                batch_res_array.push(self.executeSingleJson(item.toString()));
+            foreach var item in message {
+               
+                batch_res_array.push(self.executeSingleJson(item));
+               
             }
 
             return batch_res_array;
-        }
+        
 
-        return []; 
     }
 
     public isolated function runner(string message) returns validator:JsonRPCTypes|BatchResponse?{
-        int batchChecker = caller:batchChecker(message);
+       
+        store:Identy identity = caller:requestIdentifier(message);
 
-        match batchChecker {
-            0 =>{
-                return store:invalidRequestError();
-            }
-            1 =>{
-                return self.executeBatchJson(message);
-            }
-            2 =>{
-                return store:parseError();
-            }
-            3 =>{
-                return self.executeSingleJson(message);
-            }
-            _ =>{
-                return store:serverError();
-            }
+        if identity is validator:Error{
+            return identity;
         }
- 
+
+        if identity is map<json>{
+            return self.executeSingleJson(identity);
+        }   
+
+        if identity is json[]{
+            return self.executeBatchJson(identity);
+        }
+
+        return store:serverError();
     }
 
     public isolated function serverFunction(string method, isolated function (store:Input) returns any|error servFunc){
