@@ -1,0 +1,8 @@
+[package]
+org = "asus"
+name = "my_package"
+version = "0.1.0"
+
+export=["my_package","my_package.my_first_module","my_package.my_second_module"]
+
+distribution = "slbeta4"

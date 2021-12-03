@@ -1,5 +1,5 @@
 import ballerina/io;
-import json_rpc.server;
+import asus/json_rpc.server;
 
 type Nip record {|
     int x;

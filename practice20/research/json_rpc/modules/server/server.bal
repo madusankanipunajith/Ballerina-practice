@@ -9,7 +9,6 @@ public type InputFunc record {|
 
 |};
 
-isolated string[] stack = [];
 isolated string answer = "";
 isolated validator:Error|validator:Response|runner:BatchResponse|error? executor = null;
 type serExecutor function(string message, map<function (InputFunc func) returns any|error> serMapper) returns validator:Error | validator:Response | runner:BatchResponse | error?;
@@ -27,16 +26,9 @@ public isolated class Server {
                 
                 self.methodMapper[method] =  servFunc.clone();     
     
-            }else{
-
-                return error("same request method name cannot be applied...");
             }
         }
         
-    }
-
-    private isolated function catcher(string message) returns string|error?{
-       return;  
     }
 
     public function init() {
@@ -48,15 +40,9 @@ public isolated class Server {
         checkpanic self.addFunction(method,servFunc);
     }
 
-    public isolated function messageCatcher(string message) returns string|error?{
-                
-        lock {
-                       
-          validator:Error|validator:Response|runner:BatchResponse|error? executorResult = runner:executor(message, self.methodMapper);                
-               
-        }
-
-    return;   
+    public isolated function messageCatcher(string message) returns T{
+       
+       return ;                
     }
     
 }
