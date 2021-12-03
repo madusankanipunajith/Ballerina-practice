@@ -8,33 +8,15 @@ dependencies-toml-version = "2"
 
 [[package]]
 org = "asus"
-name = "different_package2"
+name = "client_package"
 version = "0.1.0"
 dependencies = [
-	{org = "asus", name = "json_rpc"},
 	{org = "ballerina", name = "io"},
-	{org = "ballerina", name = "log"},
 	{org = "ballerina", name = "tcp"},
 	{org = "ballerinai", name = "observe"}
 ]
 modules = [
-	{org = "asus", packageName = "different_package2", moduleName = "different_package2"}
-]
-
-[[package]]
-org = "asus"
-name = "json_rpc"
-version = "0.1.0"
-dependencies = [
-	{org = "ballerina", name = "io"},
-	{org = "ballerina", name = "lang.value"}
-]
-modules = [
-	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc"},
-	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.caller"},
-	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.server"},
-	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.store"},
-	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc.validator"}
+	{org = "asus", packageName = "client_package", moduleName = "client_package"}
 ]
 
 [[package]]
@@ -69,20 +51,6 @@ name = "lang.value"
 version = "0.0.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
-]
-
-[[package]]
-org = "ballerina"
-name = "log"
-version = "2.0.1"
-dependencies = [
-	{org = "ballerina", name = "io"},
-	{org = "ballerina", name = "jballerina.java"},
-	{org = "ballerina", name = "lang.value"},
-	{org = "ballerina", name = "observe"}
-]
-modules = [
-	{org = "ballerina", packageName = "log", moduleName = "log"}
 ]
 
 [[package]]
