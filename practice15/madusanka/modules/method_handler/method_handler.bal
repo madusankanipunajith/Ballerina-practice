@@ -1,41 +1,28 @@
 import ballerina/random;
-import madusanka.store_alpha;
-
-//type nipFunc function (string x) returns anydata|error;
-
-// MethRecord is a record array
-
-// public type MethRecord record {|
-//     string name;
-//     int id;
-//     nipFunc cf;
-// |}[];
-
-// public MethRecord method_array = [];
-
+import madusanka.store;
 
 # Description about method class
-public class method{
+class method{
     
     private string name;
     private int id;
     private int number;
-    private store_alpha:nipFunc cf;
+    private store:nipFunc cf;
 
     public function init(string method_name, function x) returns error?{
 
         // if same function is added, return error value saying same method name is added...
-        foreach var item in store_alpha:method_array {
+        foreach var item in store:method_array {
             if (item.name === method_name){
                 return error("same request method name cannot be applied...");
             }
         }
 
-        self.cf = <store_alpha:nipFunc> x.clone();
+        self.cf = <store:nipFunc> x.clone();
         self.name = method_name;
         self.id = <int> random:createDecimal();
 
-        store_alpha:method_array.push({name: self.name, id: self.id, cf: self.cf});
+        store:method_array.push({name: self.name, id: self.id, cf: self.cf});
     }
 
     public function getFunction() returns function {
@@ -43,6 +30,24 @@ public class method{
     }
 
     
+}
+
+
+# Description
+#
+# + method - User Define Method Name 
+# + x - User Define Function
+# + return - Return Value Is error otherwise nothing is retured  
+public function myFunction(string method, function (store:InputFunc) returns any|error x) returns error?{
+
+    if (store:methodMapper[method] is null) {
+     
+        store:methodMapper[method] =  x.clone();     
+    
+    }else{
+         return error("same request method name cannot be applied...");
+    }
+   
 }
 
 
