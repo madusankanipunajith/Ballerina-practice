@@ -44,3 +44,21 @@
 // 'type:Methods ms ={
 //   "add": addFunction
 // };
+
+import ballerina/io;
+import ballerina/tcp;
+public function main() returns error? {
+    tcp:Client socketClient = check new ("localhost", 3000);
+
+    string msg = "Hello Ballerina Echo from client";
+    byte[] msgByteArray = msg.toBytes();
+    check socketClient->writeBytes(msgByteArray);
+
+    readonly & byte[] receivedData = check socketClient->readBytes();
+    readonly & byte[] receivedData2 = check socketClient->readBytes();
+    io:println("Received: ", string:fromBytes(receivedData));
+    io:println("Received: ", string:fromBytes(receivedData2));
+
+    return socketClient->close();
+}
+  
