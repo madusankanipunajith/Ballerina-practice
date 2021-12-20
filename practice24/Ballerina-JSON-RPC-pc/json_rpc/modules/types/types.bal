@@ -23,7 +23,7 @@ public type Request record {
     int id;
     string method;
     anydata params;
-    string jsonrpc;
+    string jsonrpc = "2.0";
 };
 
 public type Notification record {
