@@ -28,12 +28,7 @@ public class JRPCService {
 
 public class Server {
 
-    //private JRPCService jservice;
     private JRPCSA jrpcsa = [];
-
-    // public isolated function init(JRPCService srv) {
-    //     self.jservice = srv;
-    // }
 
     public isolated function init(JRPCSA services){
         self.jrpcsa = services;
