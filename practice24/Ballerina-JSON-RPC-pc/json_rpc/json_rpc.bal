@@ -116,7 +116,7 @@ public function main() returns error? {
         method: "add"
     };
 
-     types:Notification s ={
+    types:Notification s ={
         params: 120,
         method: "add"
     };
@@ -126,7 +126,8 @@ public function main() returns error? {
     tcpService.sendMessage(r);
     _ = tcpService.fetchMessage();
     tcpService.sendMessage(batch);
-    _ = tcpService.fetchMessage();     
+    _ = tcpService.fetchMessage(); 
+        
     tcpService.closeClient();
 
 }
