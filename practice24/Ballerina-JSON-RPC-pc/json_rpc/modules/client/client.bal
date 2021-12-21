@@ -6,10 +6,12 @@ import ballerina/io;
 public enum Protocols {
     TCP, UDP
 }
+type BatchJRPCInput types:Request|types:Notification?[];
+type SingleJRPCInput types:Request|types:Notification;
 
 
 public class ClientServices {
-    public function sendMessage(string message) {
+    public function sendMessage(SingleJRPCInput|BatchJRPCInput message) {
         return;
     }
 
@@ -37,8 +39,9 @@ class TCPClient {
 
     
 
-    public function sendMessage(string message) {
-        byte[] msgByteArray = message.toBytes();
+    public function sendMessage(SingleJRPCInput|BatchJRPCInput message) {
+        string jsonMessage = message.toJsonString(); 
+        byte[] msgByteArray = jsonMessage.toBytes();
         checkpanic self.tcpClient->writeBytes(msgByteArray);
     }
 
@@ -71,12 +74,14 @@ class UDPClient {
         return;
     }
 
-    public function sendMessage(string message) {
+    public function sendMessage(SingleJRPCInput|BatchJRPCInput message) {
+
+        string jsonMessage = message.toJsonString();
 
         udp:Datagram datagram = {
             remoteHost: self.udpHost,
             remotePort : self.udpPort,
-            data : message.toBytes()
+            data : jsonMessage.toBytes()
         };
 
         checkpanic self.udpClient->sendDatagram(datagram);

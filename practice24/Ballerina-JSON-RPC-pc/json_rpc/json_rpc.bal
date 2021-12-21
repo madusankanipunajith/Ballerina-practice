@@ -103,13 +103,32 @@
 //     }
 // }
 
+import json_rpc.types;
 import json_rpc.'client;
-import ballerina/io;
 public function main() returns error? {
 
     'client:Client cl = new();
     'client:ClientServices tcpService = check cl.setConfig("localhost", 9000, 'client:TCP);
-    io:println(tcpService);
+
+    types:Request r ={
+        id: 156,
+        params: 120,
+        method: "add"
+    };
+
+     types:Notification s ={
+        params: 120,
+        method: "add"
+    };
+
+    types:Batch batch = [r,s];
+
+    tcpService.sendMessage(r);
+    _ = tcpService.fetchMessage();
+    tcpService.sendMessage(batch);
+    _ = tcpService.fetchMessage();     
+    tcpService.closeClient();
+
 }
 
 
