@@ -1,6 +1,12 @@
 import json_rpc.caller;
 import json_rpc.'types;
 import json_rpc.util;
+//import ballerina/tcp;
+// import ballerina/io;
+// import ballerina/log;
+
+type SingleJRPCOutput 'types:Response|'types:Error;
+type BatchJRPCOutput 'types:Response|'types:Error[];
 
 type BatchResponse 'types:JsonRPCTypes?[]; 
 
@@ -86,7 +92,7 @@ public class Server {
         
     }
 
-    private isolated function executeSingleJson('types:Request message) returns 'types:Error|'types:Response?{
+    private isolated function executeSingleJson('types:Request message) returns 'types:Error|'types:Response{
 
             'types:Method|error mf = self.methodFilter(message);
 
@@ -118,7 +124,7 @@ public class Server {
 
     }
 
-    public isolated function runner(string message) returns 'types:JsonRPCTypes|BatchResponse?{
+    public isolated function runner(string message) returns 'types:JsonRPCTypes|BatchResponse{
        
         'types:Identy identity = caller:requestIdentifier(message);
 
@@ -133,7 +139,7 @@ public class Server {
             }
 
             if caller:checker(identity) is 'types:Error{
-                return caller:checker(identity);
+                return <'types:Error> caller:checker(identity);
             }
            
         }   
@@ -143,6 +149,11 @@ public class Server {
         }
 
         return util:serverError();
+    }
+
+
+    public isolated function sendReply(){
+
     }
 
 }

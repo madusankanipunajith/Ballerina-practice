@@ -110,14 +110,14 @@ service on new tcp:Listener(9000) {
 
     remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService {
         io:println("Client connected to echo server: ", caller.remotePort);
-        return new EchoService();
+        return new MainTCPService();
     }
 }
 
-service class EchoService {
+service class MainTCPService {
     *tcp:ConnectionService;
-    remote function onBytes(tcp:Caller caller, readonly & byte[] data) 
-        returns tcp:Error? {
+    
+    remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns tcp:Error? {
         io:println("Echo: ", string:fromBytes(data));
 
         return caller->writeBytes(data);
