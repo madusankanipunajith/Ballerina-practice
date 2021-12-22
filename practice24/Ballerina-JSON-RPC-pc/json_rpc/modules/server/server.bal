@@ -1,7 +1,6 @@
 import json_rpc.caller;
 import json_rpc.'types;
 import json_rpc.util;
-import ballerina/regex;
 
 type BatchResponse 'types:JsonRPCTypes?[]; 
 
@@ -38,7 +37,8 @@ public class Server {
 
             string method = result.method;
             'types:Methods allMethods = {}; 
-            string|error methodName;
+            string serviceName = "";
+            string methodName = "";
 
             if self.jrpcsa.length() == 1 {
 
@@ -46,16 +46,19 @@ public class Server {
                 methodName = method;
 
             }else if self.jrpcsa.length() > 1 {
-                // serviceName/method
-                // serviceName/m1/abc
-                // regex
-                string[] splitMethod = regex:split(method,"/");
-                string serviceName = splitMethod[0];
 
-                methodName = trap splitMethod[1];
-                if methodName is error{
+                int? index = method.indexOf("/");
+
+                if index is int{
+
+                    serviceName = string:substring(method, 0, index);
+                    methodName = string:substring(method, index+1, method.length());
+                
+                }else{
+
                     return error("can't find the method");
                 }
+
 
                 foreach var item in self.jrpcsa {
                     if item.name() == serviceName {
@@ -70,7 +73,7 @@ public class Server {
 
             //'types:Methods allMethodss = self.jservice.methods.getMethods();
 
-            'types:Method|error selectedMethod = trap allMethods.get(check methodName);
+            'types:Method|error selectedMethod = trap allMethods.get(methodName);
 
             if selectedMethod is error {
 
