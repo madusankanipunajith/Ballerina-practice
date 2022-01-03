@@ -13,7 +13,6 @@ version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "io"},
 	{org = "ballerina", name = "lang.value"},
-	{org = "ballerina", name = "log"},
 	{org = "ballerina", name = "tcp"},
 	{org = "ballerina", name = "test"},
 	{org = "ballerina", name = "udp"}
@@ -63,28 +62,6 @@ dependencies = [
 ]
 modules = [
 	{org = "ballerina", packageName = "lang.value", moduleName = "lang.value"}
-]
-
-[[package]]
-org = "ballerina"
-name = "log"
-version = "2.0.1"
-dependencies = [
-	{org = "ballerina", name = "io"},
-	{org = "ballerina", name = "jballerina.java"},
-	{org = "ballerina", name = "lang.value"},
-	{org = "ballerina", name = "observe"}
-]
-modules = [
-	{org = "ballerina", packageName = "log", moduleName = "log"}
-]
-
-[[package]]
-org = "ballerina"
-name = "observe"
-version = "1.0.0"
-dependencies = [
-	{org = "ballerina", name = "jballerina.java"}
 ]
 
 [[package]]
