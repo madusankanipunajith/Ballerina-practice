@@ -2,7 +2,7 @@ import json_rpc.caller;
 import json_rpc.'types;
 import json_rpc.util;
 //import ballerina/tcp;
-// import ballerina/io;
+//import ballerina/io;
 // import ballerina/log;
 
 type SingleJRPCOutput 'types:Response|'types:Error;
@@ -124,7 +124,7 @@ public class Server {
 
     }
 
-    public isolated function runner(string message) returns 'types:JsonRPCTypes|BatchResponse{
+    public isolated function runner(string message) returns 'types:JsonRPCTypes|BatchResponse|null{
        
         'types:Identy identity = caller:requestIdentifier(message);
 
@@ -140,6 +140,10 @@ public class Server {
 
             if caller:checker(identity) is 'types:Error{
                 return <'types:Error> caller:checker(identity);
+            }
+
+            if caller:checker(identity) is null{
+                return null;
             }
            
         }   

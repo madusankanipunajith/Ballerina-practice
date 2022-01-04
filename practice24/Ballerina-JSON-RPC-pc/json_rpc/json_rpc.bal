@@ -103,29 +103,45 @@
 //     }
 // }
 
-import json_rpc.types;
+import json_rpc.'types;
 import json_rpc.'client;
+import ballerina/io;
 public function main() returns error? {
 
     'client:Client cl = new();
-    'client:ClientServices tcpService = check cl.setConfig("localhost", 9000, 'client:TCP);
+    'client:ClientServices tcpService = check cl.setConfig("localhost", 9090, 'client:WS);
 
-    types:Request r ={
-        id: 156,
-        params: 120,
-        method: "add"
+    'types:Request r ={
+      method: "add",
+      params: {"x":10, "y":20},
+      id: 156
     };
 
-    types:Notification s ={
-        params: 120,
-        method: "add"
+    'types:Request s ={
+      method: "add",
+      params: 1000,
+      id: 157
     };
 
-    types:Batch batch = [r,s];
+    //'types:Batch b = [];
 
-    tcpService.sendMessage(r);
-    
-    tcpService.sendMessage(batch); 
+    'types:Notification n ={
+      method: "mult",
+      params: [10,20]
+    };
+
+    tcpService.sendMessage(r, function (types:Response|types:Error u) returns () {
+        io:println(u);
+    });
+
+    tcpService.sendNotification(n);
+    // tcpService.sendMessage(b, function (types:Response|types:Error u) returns () {
+    //    io:println(u); 
+    // });
+
+    tcpService.sendMessage(s, function (types:Response|types:Error u) returns () {
+        io:println(u);
+    }); 
 
     tcpService.closeClient();
 

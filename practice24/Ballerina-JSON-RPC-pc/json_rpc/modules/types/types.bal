@@ -1,15 +1,15 @@
 public type JsonRecord record {|
     int id?;
     string method?;
-    string result?;
+    anydata result?;
     anydata params?;
-    string jsonrpc;
+    string jsonrpc = "2.0";
     json err?;
 |};
 
 public type Response record {|
     int id;
-    any result;
+    anydata result;
     string jsonrpc;
 |};
 
