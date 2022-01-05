@@ -123,21 +123,18 @@ public function main() returns error? {
       id: 157
     };
 
-    //'types:Batch b = [];
-
     'types:Notification n ={
       method: "mult",
       params: [10,20]
     };
+
+    
 
     tcpService.sendMessage(r, function (types:Response|types:Error u) returns () {
         io:println(u);
     });
 
     tcpService.sendNotification(n);
-    // tcpService.sendMessage(b, function (types:Response|types:Error u) returns () {
-    //    io:println(u); 
-    // });
 
     tcpService.sendMessage(s, function (types:Response|types:Error u) returns () {
         io:println(u);
