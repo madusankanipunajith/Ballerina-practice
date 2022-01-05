@@ -21,12 +21,14 @@ public isolated function executor('types:Request|'types:Notification request, is
         any _ = check abstractFunction(fetchedParameters);    
             
             if request is 'types:Request {
+             
                 return util:responseObject(request.id, "success");      
+            
+            }else{
+
+                return null;
             }
-           
-            if request is 'types:Notification{
-               return null;
-           }
+
             
     }
 
