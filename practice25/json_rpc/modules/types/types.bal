@@ -53,6 +53,8 @@ public type Methods record {|
     isolated function (Input) returns any|error...;
 |};
 
+public type JRPCResponse Response|Error|JsonRPCTypes?[]|null;
+
 public class JRPCMethods {
 
     public isolated function getMethods() returns Methods{

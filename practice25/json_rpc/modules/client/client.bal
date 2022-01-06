@@ -13,7 +13,7 @@ type BatchJRPCInput types:Request|types:Notification?[];
 type SingleJRPCInput types:Request;
 type BatchJRPCOutput 'types:JsonRPCTypes?[]; 
 
-function fetchResponse(string response) returns types:Response|types:Error|BatchJRPCOutput|null{
+function fetchResponse(string response) returns types:JRPCResponse{
     any|error fetchMessage = trap value:fromJsonString(response);
 
     if fetchMessage is any[]{
@@ -34,7 +34,7 @@ function fetchResponse(string response) returns types:Response|types:Error|Batch
 }
 
 public class ClientServices {
-    public function  sendMessage(SingleJRPCInput|BatchJRPCInput message) returns types:Response|types:Error|BatchJRPCOutput|null{
+    public function  sendMessage(SingleJRPCInput|BatchJRPCInput message) returns types:JRPCResponse{
         return;
     }
 
@@ -45,6 +45,14 @@ public class ClientServices {
 
     public function closeClient() {
         return;
+    }
+}
+
+// method wrapper
+public class JRPCClientMethods {
+    public ClientServices clientServices;
+    public function init(ClientServices cls) {
+        self.clientServices = cls;
     }
 }
 

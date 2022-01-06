@@ -151,4 +151,42 @@ public function main() returns error? {
 }
 
 
+class ClientMethods {
+  *'client:JRPCClientMethods;
+
+  function init('client:ClientServices cls) {
+    self.clientServices = cls;
+  }
+
+  public function addFunction(int id,json params, function ('types:JRPCResponse response) callback) {
+    'types:Request r ={
+      id:id,
+      params: params,
+      method:"add"
+    };
+
+    types:JRPCResponse sendMessage = self.clientServices.sendMessage(r);
+    callback(sendMessage);
+  }
+
+  public function subFunction(int id,json params, function ('types:JRPCResponse response) callback) {
+    'types:Request r ={
+      id:id,
+      params: params,
+      method:"sub"
+    };
+
+    types:JRPCResponse sendMessage = self.clientServices.sendMessage(r);
+    callback(sendMessage);
+  }
+
+  public function notFunction(json params) {
+    'types:Notification n ={
+      params: params,
+      method: "mult"
+    };
+
+    self.clientServices.sendNotification(n);
+  }
+}
 
