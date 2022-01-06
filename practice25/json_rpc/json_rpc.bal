@@ -121,30 +121,36 @@ public function main() returns error? {
     'client:Client cl = new();
     'client:ClientServices tcpService = check cl.setConfig("localhost", 9000, 'client:TCP);
 
-    'types:Request r ={
-      method: "add",
-      params: {"x":10, "y":20},
-      id: 156
-    };
+    ClientMethods clm = new(tcpService);
 
-    'types:Request s ={
-      method: "add",
-      params: 1000,
-      id: 157
-    };
+    clm.addFunction(125, {"x":10, "y":20}, function (types:JRPCResponse t) returns () {
+     io:println(t);   
+    });
 
-    'types:Notification n ={
-      method: "mult",
-      params: [10,20]
-    };
+    // 'types:Request r ={
+    //   method: "add",
+    //   params: {"x":10, "y":20},
+    //   id: 156
+    // };
+
+    // 'types:Request s ={
+    //   method: "add",
+    //   params: 1000,
+    //   id: 157
+    // };
+
+    // 'types:Notification n ={
+    //   method: "mult",
+    //   params: [10,20]
+    // };
 
     
 
-    io:println(tcpService.sendMessage(r));
+    // io:println(tcpService.sendMessage(r));
 
-    tcpService.sendNotification(n);
+    // tcpService.sendNotification(n);
 
-    io:println(tcpService.sendMessage(s)); 
+    // io:println(tcpService.sendMessage(s)); 
 
     tcpService.closeClient();
 
