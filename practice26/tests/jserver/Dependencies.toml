@@ -8,7 +8,7 @@ dependencies-toml-version = "2"
 
 [[package]]
 org = "asus"
-name = "different_package"
+name = "jserver"
 version = "0.1.0"
 dependencies = [
 	{org = "asus", name = "json_rpc"},
@@ -18,7 +18,7 @@ dependencies = [
 	{org = "ballerinai", name = "observe"}
 ]
 modules = [
-	{org = "asus", packageName = "different_package", moduleName = "different_package"}
+	{org = "asus", packageName = "jserver", moduleName = "jserver"}
 ]
 
 [[package]]
@@ -28,7 +28,8 @@ version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "io"},
 	{org = "ballerina", name = "lang.value"},
-	{org = "ballerina", name = "tcp"}
+	{org = "ballerina", name = "tcp"},
+	{org = "ballerina", name = "udp"}
 ]
 modules = [
 	{org = "asus", packageName = "json_rpc", moduleName = "json_rpc"},
@@ -112,6 +113,14 @@ modules = [
 org = "ballerina"
 name = "time"
 version = "2.0.1"
+dependencies = [
+	{org = "ballerina", name = "jballerina.java"}
+]
+
+[[package]]
+org = "ballerina"
+name = "udp"
+version = "1.0.1"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]
