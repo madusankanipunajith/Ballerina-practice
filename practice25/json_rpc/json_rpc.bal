@@ -127,31 +127,6 @@ public function main() returns error? {
      io:println(t);   
     });
 
-    // 'types:Request r ={
-    //   method: "add",
-    //   params: {"x":10, "y":20},
-    //   id: 156
-    // };
-
-    // 'types:Request s ={
-    //   method: "add",
-    //   params: 1000,
-    //   id: 157
-    // };
-
-    // 'types:Notification n ={
-    //   method: "mult",
-    //   params: [10,20]
-    // };
-
-    
-
-    // io:println(tcpService.sendMessage(r));
-
-    // tcpService.sendNotification(n);
-
-    // io:println(tcpService.sendMessage(s)); 
-
     tcpService.closeClient();
 
 }
