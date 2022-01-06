@@ -1,5 +1,5 @@
 public type JsonRecord record {|
-    int id?;
+    int? id?;
     string method?;
     anydata result?;
     anydata params?;

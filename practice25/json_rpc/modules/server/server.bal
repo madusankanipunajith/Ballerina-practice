@@ -2,9 +2,6 @@ import json_rpc.caller;
 import json_rpc.'types;
 import json_rpc.util;
 
-type SingleJRPCOutput 'types:Response|'types:Error;
-type BatchJRPCOutput 'types:Response|'types:Error[];
-
 type BatchResponse 'types:JsonRPCTypes?[]; 
 
 # User Input parameters  

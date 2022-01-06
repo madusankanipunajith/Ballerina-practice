@@ -105,82 +105,82 @@
 
 
 
-// import ballerina/io;
-// import ballerina/log;
-// import ballerina/tcp;
-// import asus/json_rpc.server;
-// import asus/json_rpc.types;
-
-// type Nip record {|
-//     int x;
-//     int y;
-// |};
-// service on new tcp:Listener(9000) {
-
-//     remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService {
-//         io:println("Client connected to echo server: ", caller.remotePort);
-//         return new MainTCPService();
-//     }
-// }
-
-// service class MainTCPService {
-//     *tcp:ConnectionService;
-    
-//     remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns tcp:Error? {
-//         io:println("Echo: ", string:fromBytes(data));
-
-//         // calling the library
-//         Calculator calc = new();
-//         server:Server s1 = new([calc]);
-//         string input = checkpanic string:fromBytes(data); io:println(input);
-//         any runner = s1.runner(input);
-
-//         return caller->writeBytes(runner.toString().toBytes());
-//     }
-
-//     remote function onError(tcp:Error err) {
-//         log:printError("An error occurred", 'error = err);
-//     }
-
-//     remote function onClose() {
-//         io:println("Client left");
-//     }
-// }
-
-
-
 import ballerina/io;
+import ballerina/log;
+import ballerina/tcp;
 import asus/json_rpc.server;
 import asus/json_rpc.types;
-import ballerina/websocket;
 
 type Nip record {|
     int x;
     int y;
 |};
+service on new tcp:Listener(9000) {
 
-
-service / on new websocket:Listener(9090) {
-   resource isolated function get .() returns websocket:Service|websocket:Error {
-       return new WsService();
-   }
+    remote function onConnect(tcp:Caller caller) returns tcp:ConnectionService {
+        io:println("Client connected to echo server: ", caller.remotePort);
+        return new MainTCPService();
+    }
 }
 
-service class WsService {
-    *websocket:Service;
+service class MainTCPService {
+    *tcp:ConnectionService;
     
-    remote function onBinaryMessage(websocket:Caller caller, byte[] text) returns websocket:Error? {
+    remote function onBytes(tcp:Caller caller, readonly & byte[] data) returns tcp:Error? {
+        io:println("Echo: ", string:fromBytes(data));
 
         // calling the library
         Calculator calc = new();
         server:Server s1 = new([calc]);
-        string input = checkpanic string:fromBytes(text); io:println(input);
+        string input = checkpanic string:fromBytes(data); io:println(input);
         any runner = s1.runner(input);
-        io:println("output : ", runner);
 
-        return caller->writeBinaryMessage(runner.toString().toBytes());
+        return caller->writeBytes(runner.toString().toBytes());
+    }
+
+    remote function onError(tcp:Error err) {
+        log:printError("An error occurred", 'error = err);
+    }
+
+    remote function onClose() {
+        io:println("Client left");
     }
 }
+
+
+
+// import ballerina/io;
+// import asus/json_rpc.server;
+// import asus/json_rpc.types;
+// import ballerina/websocket;
+
+// type Nip record {|
+//     int x;
+//     int y;
+// |};
+
+
+// service / on new websocket:Listener(9090) {
+//    resource isolated function get .() returns websocket:Service|websocket:Error {
+//        return new WsService();
+//    }
+// }
+
+// service class WsService {
+//     *websocket:Service;
+    
+//     remote function onBinaryMessage(websocket:Caller caller, byte[] text) returns websocket:Error? {
+
+//         // calling the library
+//         Calculator calc = new();
+//         server:Server s1 = new([calc]);
+//         string input = checkpanic string:fromBytes(text); io:println(input);
+//         any runner = s1.runner(input);
+//         io:println("output : ", runner);
+
+//         return caller->writeBinaryMessage(runner.toString().toBytes());
+//     }
+// }
 
 
 class Calculator{
