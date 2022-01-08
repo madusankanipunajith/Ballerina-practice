@@ -3,22 +3,16 @@ import json_rpc.'client;
 import ballerina/io;
 public function main() returns error? {
 
+    ClientMethods clm = new();
+    'client:Client cl = new("localhost", 9000, 'client:TCP, clm);
 
-    'client:Client cl = new("localhost", 9000, 'client:UDP);
-    ClientMethods clm = new(cl);
+    ClientMethods clientMethods = <ClientMethods>cl.ops();
     
-    clm.addFunction(125, {"x":10, "y":20}, function (types:JRPCResponse t) returns () {
-        io:println(t);   
+    clientMethods.addFunction(125, {"x":10, "y":20}, function (types:JRPCResponse t) returns () {
+     io:println(t);   
     });
 
-
     cl.closeClient();
-
-//     clm.addFunction(125, {"x":10, "y":20}, function (types:JRPCResponse t) returns () {
-//      io:println(t);   
-//     });
-
-//     tcpService.closeClient();
 
 }
 
@@ -26,11 +20,8 @@ public function main() returns error? {
 class ClientMethods {
   *'client:JRPCClientMethods;
 
-    private 'client:ClientServices clientServices;
-
-    function init('client:Client cl) {
-        self.jsonClient = cl;
-        self.clientServices = cl.getClientService();
+    function init() {
+        self.clientService = new();
     }
 
   public function addFunction(int id,json params, function ('types:JRPCResponse response) callback) {
@@ -40,7 +31,7 @@ class ClientMethods {
       method:"add"
     };
 
-    types:JRPCResponse sendMessage = self.clientServices.sendMessage(r);
+    types:JRPCResponse sendMessage = self.clientService.sendMessage(r);
     callback(sendMessage);
   }
 
@@ -51,7 +42,7 @@ class ClientMethods {
       method:"sub"
     };
 
-    types:JRPCResponse sendMessage = self.clientServices.sendMessage(r);
+    types:JRPCResponse sendMessage = self.clientService.sendMessage(r);
     callback(sendMessage);
   }
 
@@ -61,7 +52,7 @@ class ClientMethods {
       method: "mult"
     };
 
-    self.clientServices.sendNotification(n);
+    self.clientService.sendNotification(n);
  }
 }
 

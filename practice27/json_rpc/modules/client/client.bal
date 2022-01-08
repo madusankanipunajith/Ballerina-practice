@@ -45,12 +45,10 @@ public class ClientServices {
 
 // method wrapper
 public class JRPCClientMethods {
-    //public ClientServices clientServices;
-    public Client jsonClient;
+    public ClientServices clientService;
 
-    public function init(Client cls) {
-        self.jsonClient = cls;
-    //    self.clientServices = self.jsonClient.getClientService();
+    public function init() {
+        self.clientService = new();
     }
 }
 
@@ -200,8 +198,9 @@ class UDPClient {
 public class Client {
 
     private ClientServices clientService = new();
+    private JRPCClientMethods jclmethods;
 
-    public function init(string remoteHost, int remotePort, Protocols protocol) {
+    public function init(string remoteHost, int remotePort, Protocols protocol, JRPCClientMethods jclm) {
         
         match protocol {
             
@@ -217,7 +216,8 @@ public class Client {
             }
         }
 
-        
+        jclm.clientService = self.clientService;
+        self.jclmethods = jclm;
     }
 
 
@@ -241,6 +241,10 @@ public class Client {
         }
 
         return error("protocol is not initialized yet");
+    }
+
+    public function ops() returns JRPCClientMethods{
+        return self.jclmethods;
     }
 
     public function getClientService() returns ClientServices{
