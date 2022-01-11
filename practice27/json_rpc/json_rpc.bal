@@ -3,21 +3,21 @@ import json_rpc.'client;
 import ballerina/io;
 public function main() returns error? {
 
-    ClientMethods clm = new();
-    'client:Client cl = new("localhost", 9000, 'client:TCP, clm);
+    CalculatorMethod clm = new();
 
-    ClientMethods clientMethods = <ClientMethods>cl.ops();
+    'client:Client cl = new("localhost", 9000, 'client:TCP, clm);
+    CalculatorMethod clientMethods = <CalculatorMethod>cl.ops();
     
     clientMethods.addFunction(125, {"x":10, "y":20}, function (types:JRPCResponse t) returns () {
-     io:println(t);   
+      io:println(t);   
     });
-
+    
     cl.closeClient();
 
 }
 
 
-class ClientMethods {
+class CalculatorMethod {
   *'client:JRPCClientMethods;
 
     function init() {
